@@ -11,22 +11,23 @@ class SimpleBlock extends Plugin
 	 **/
 	function action_init()
 	{
+		$this->load_text_domain( 'simpleblock' );
 		$this->add_template( 'block.simpleblock', dirname(__FILE__) . '/block.simpleblock.php' );
 	}
 
 	/**
 	 * Add to the list of possible block types.
 	 **/
-	public function filter_block_list($block_list)
+	public function filter_block_list( $block_list )
 	{
-		$block_list['simpleblock'] = _t('Simple Block');
+		$block_list[ 'simpleblock' ] = _t( 'Simple Block', 'simpleblock' );
 		return $block_list;
 	}
 
 	/**
 	 * Output the content of the block, and nothing else.
 	 **/
-	public function action_block_content_simpleblock($block, $theme)
+	public function action_block_content_simpleblock( $block, $theme )
 	{
 		return $block;
 	}
@@ -34,20 +35,11 @@ class SimpleBlock extends Plugin
 	/**
 	 * Configuration form with one big textarea. Raw to allow JS/HTML/etc. Insert them at your own peril.
 	 **/
-	public function action_block_form_simpleblock($form, $block)
+	public function action_block_form_simpleblock( $form, $block )
 	{
-		$content = $form->append('textarea', 'content', $block, _t( 'Content:' ) );
+		$content = $form->append('textarea', 'content', $block, _t( 'Content:', 'simpleblock' ) );
 		$content->raw = true;
 		$content->rows = 5;
-		$form->append('submit', 'save', 'Save');
-	}
-
-	/**
-	 * Add update beacon support
-	 **/
-	public function action_update_check()
-	{
-		Update::add( 'Simple Block', '50a5f6c5-8343-43ee-b9dd-aa783a7f07b8', $this->info->version );
 	}
 
 }
